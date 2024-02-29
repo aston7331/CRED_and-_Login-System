@@ -49,8 +49,7 @@ const jwtUserVerify = (req, res, next) => {
           return UnAuthorizedResponse(res, { msg: "Unauthorized token" });
         } else {
           req.user = decoded
-          const userid = decoded.data.id;
-          const user = await findByLoginUserId(userid);
+          const user = await findByLoginUserId(decoded.data.id);
           if (!user) {
             return UnAuthorizedResponse(res, { msg: "Unauthorized token" });
           }
@@ -74,10 +73,8 @@ const jwtUserVerify = (req, res, next) => {
  */
 const jwtRefresh = async (refreshToken, res) => {
   try {
-    const refreshAuthtoken = refreshToken;
-
-    if (refreshAuthtoken) {
-      return jsonWebToken.verify(refreshAuthtoken, process.env.USER_REFRESH_SECRET_KEY, (err, decoded) => {
+    if (refreshToken) {
+      return jsonWebToken.verify(refreshToken, process.env.USER_REFRESH_SECRET_KEY, (err, decoded) => {
         if (err) {
           return res.status(401).json({ msg: "Invalid refresh token" });
         } else {

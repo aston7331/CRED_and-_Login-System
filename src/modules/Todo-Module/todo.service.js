@@ -10,11 +10,7 @@ class TodoService {
    */
   async createTask(data) {
     try {
-      let todoData = {
-        task: data?.task
-      };
-
-      const result = await createTask(todoData)
+      const result = await createTask(data)
       return { success: true, body: result };
     } catch (error) {
       return { success: false, error: error }

@@ -19,9 +19,7 @@ const createTask = async (data) => {
 const getTodoList = async (id) => {
   if (id) {
     return todoModel.findOne({
-      where: {
-        id: id
-      }
+      where: { id }
     })
   } else {
     return todoModel.findAndCountAll()
