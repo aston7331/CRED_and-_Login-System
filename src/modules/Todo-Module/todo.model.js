@@ -11,6 +11,11 @@ const Todo = db.define("todo", {
   task: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  status: {
+    type: DataTypes.ENUM("ToBeStarted", "Pending", "Complete"),
+    allowNull: false,
+    defaultValue: "ToBeStarted"
   }
 }, {
   tableName: "todo",
