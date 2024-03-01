@@ -13,24 +13,23 @@ const methods = {};
  */
 methods.createTask = async (req, res) => {
   try {
-    const result = await todoServiceInterface.createTask(req.body)
+    const result = await todoServiceInterface.createTask(req.body);
 
     if (result.success) {
       const response = {
         data: result.body
-      }
+      };
       return SuccessPostResponse(res, response);
     } else {
       res.status(409).json({
         msg: "Task not created",
         success: false
       });
-    }
+    };
   } catch (error) {
-    console.log(error)
     return ErrorResponse(res, error);
-  }
-}
+  };
+};
 
 /**
  * 
@@ -42,12 +41,12 @@ methods.createTask = async (req, res) => {
  */
 methods.getTodoList = async (req, res) => {
   try {
-    const result = await todoServiceInterface.getTodoList(req.query.id)
+    const result = await todoServiceInterface.getTodoList(req.query.id);
 
     if (result.success) {
       const response = {
         data: result.body
-      }
+      };
       return SuccessPostResponse(res, response);
     } else {
       res.status(409).json({
@@ -57,8 +56,8 @@ methods.getTodoList = async (req, res) => {
     }
   } catch (error) {
     return ErrorResponse(res, error);
-  }
-}
+  };
+};
 
 /**
  * 
@@ -77,18 +76,18 @@ methods.updateTask = async (req, res) => {
     if (result.success) {
       const response = {
         data: result.body
-      }
+      };
       return UpdateResponse(res, response);
     } else {
       res.status(409).json({
         msg: "Task not created",
         success: false
       });
-    }
+    };
   } catch (error) {
     return ErrorResponse(res, error);
-  }
-}
+  };
+};
 
 /**
  * 
@@ -111,6 +110,62 @@ methods.deleteTask = async (req, res) => {
       return DeleteResponse(res, response);
     }
 
+  } catch (error) {
+    return ErrorResponse(res, error);
+  };
+};
+
+/**
+ * 
+ * @method UPDATE
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns Json response or Error response
+ * @comment Bulk status Update the task List.
+ */
+methods.bulkStatusUpdate = async (req, res) => {
+  try {
+    const data = req.body;
+    const result = await todoServiceInterface.bulkStatusUpdate(data);
+    if (result.success) {
+      const response = {
+        data: result.body
+      }
+      return UpdateResponse(res, response);
+    } else {
+      res.status(409).json({
+        msg: "Task not created",
+        success: false
+      });
+    }
+  } catch (error) {
+    return ErrorResponse(res, error);
+  }
+}
+
+/**
+ * 
+ * @method DELETE
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns Json response or Error response
+ * @comment Bulk Delete the task List.
+ */
+methods.bulkDelete = async (req, res) => {
+  try {
+    const data = req.body;
+    const result = await todoServiceInterface.bulkDelete(data);
+    if (result.success) {
+      const response = {
+        data: result.body
+      }
+      return UpdateResponse(res, response);
+    } else {
+      res.status(409).json({
+        msg: "Task not created",
+        success: false
+      });
+    }
   } catch (error) {
     return ErrorResponse(res, error);
   }
