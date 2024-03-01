@@ -55,9 +55,45 @@ const deleteTask = async (id) => {
   });
 }
 
+/**
+ * 
+ * @param {Object} data 
+ * @returns Object
+ * @comment Bulk status Update the Task
+ */
+const bulkStatusUpdate = async (data) => {
+  const ids = data?.ids;
+  const status = data?.status;
+  console.log(ids, status)
+  return todoModel.update({
+    status: status
+  }, {
+    where: {
+      id: ids
+    }
+  })
+}
+
+/**
+ * 
+ * @param {Object} data
+ * @returns Object
+ * @comment Bulk Delete the Task
+ */
+const bulkDelete = async (data) => {
+  const ids = data?.ids;
+  return todoModel.destroy({
+    where: {
+      id: ids
+    }
+  })
+}
+
 module.exports = {
   createTask,
   getTodoList,
   updateTask,
-  deleteTask
+  deleteTask,
+  bulkStatusUpdate,
+  bulkDelete
 }
